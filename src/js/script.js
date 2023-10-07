@@ -27,7 +27,7 @@ const clearStorage = () => {
   localStorage.removeItem(STORAGE_KEY);
 };
 
-const removeTaskFromLocalStorage = (deletedTask) => {
+const removeTaskFromLocalStorage = (indexDeletedTask) => {
   const tasks = getTasksFromStorage();
 
   // Видалення елементу з масиву
@@ -36,8 +36,8 @@ const removeTaskFromLocalStorage = (deletedTask) => {
   // localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredTasks));
 
   // 2 - findIndex + splice
-  const index = tasks.findIndex((task) => task === deletedTask);
-  tasks.splice(index, 1);
+  //const index = tasks.findIndex((task) => task === deletedTask);
+  tasks.splice(indexDeletedTask, 1);
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 };
@@ -79,16 +79,18 @@ const clearTasks = () => {
 
 const removeTask = (event) => {
   const isDeleteIcon = event.target.classList.contains("fa-remove");
+  const liElements = document.querySelectorAll('li');
+  const liArr = [...liElements];
 
   if (isDeleteIcon) {
     const isApproved = confirm("Ви впевнені?");
 
     if (isApproved) {
       const deletedLi = event.target.closest("li");
+      const indexDeletedLi = liArr.indexOf(deletedLi);
       deletedLi.remove();
 
-      const text = deletedLi.firstChild.textContent;
-      removeTaskFromLocalStorage(text);
+      removeTaskFromLocalStorage(indexDeletedLi);
     }
   }
 };
