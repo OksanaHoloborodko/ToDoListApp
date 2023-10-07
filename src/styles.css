@@ -1,3 +1,121 @@
+body, h1, h2, h3, p, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(to bottom right, #563ce9, #e35e9d);
+}
+
 body {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+}
+
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: #3e007c;
+  text-align: center;
+}
+
+.task-title {
+  font-size: 18px;
+  margin: 15px 0;
+  color: #333;
+}
+
+.input-field {
+  margin: 0 20px 15px 0;
+}
+
+.task-input, .filter-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.task-input, .filter-input:focus {
+  outline: none;
+}
+
+.btn, .clear-tasks {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3e007c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.btn:hover, .clear-tasks:hover {
+  background-color: #cf116a;
+}
+
+.collection {
+  list-style-type: none;
+  margin-bottom: 20px;
+}
+
+.collection li {
+  display: grid;
+  grid-template-columns: 90% 5% 5%;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.collection li span {
+  min-width: 18px;
+  text-align: end;
+  color: #3e007c;
+}
+
+.collection li span:hover {
+  color:#cf116a;
+  transition: 1s;
+}
+
+@media (max-width: 900px) {
+  body {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 650px) {
+  .container {
+    padding: 10px;
+  }
+
+  .collection li {
+    grid-template-columns: 86% 7% 7%;
+  }
 }
