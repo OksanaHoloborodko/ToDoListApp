@@ -93,6 +93,10 @@ h1 {
   border-bottom: 1px solid #ccc;
 }
 
+.collection li[hidden] {
+  display: none;
+}
+
 .collection li span {
   min-width: 18px;
   text-align: end;
