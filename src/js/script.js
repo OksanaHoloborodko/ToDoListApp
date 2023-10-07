@@ -27,6 +27,13 @@ const clearStorage = () => {
   localStorage.removeItem(STORAGE_KEY);
 };
 
+const editTaskInLocalStorage = (textEditedTask, indexEditedTask) => {
+    const tasks = getTasksFromStorage();
+    tasks[indexEditedTask] = textEditedTask;
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+};
+
 const removeTaskFromLocalStorage = (indexDeletedTask) => {
   const tasks = getTasksFromStorage();
 
@@ -58,6 +65,11 @@ const addTask = (event) => {
   li.className = "collection-item";
   li.textContent = value; // значення від користувача
 
+  const spanEdit = document.createElement("span");
+  spanEdit.className = "edit-item";
+  spanEdit.innerHTML = '<i class="fa fa-edit"></i>';
+  li.append(spanEdit);
+
   const span = document.createElement("span");
   span.className = "delete-item";
   span.innerHTML = '<i class="fa fa-remove"></i>';
@@ -75,6 +87,24 @@ const addTask = (event) => {
 const clearTasks = () => {
   taskList.innerHTML = "";
   clearStorage();
+};
+
+const editTask = (event) => {
+    const isEditIcon = event.target.classList.contains("fa-edit");
+    const liElements = document.querySelectorAll('li');
+    const liArr = [...liElements];
+
+    if (isEditIcon) {
+        const editText = prompt('Відредагуйте текст');
+
+        if (editText) {
+            const editedLi = event.target.closest("li");
+            const indexEditedLi = liArr.indexOf(editedLi);
+            editedLi.firstChild.nodeValue = editText;
+
+            editTaskInLocalStorage(editText, indexEditedLi);
+        }
+    }
 };
 
 const removeTask = (event) => {
@@ -121,6 +151,11 @@ const getTasks = () => {
     li.className = "collection-item";
     li.textContent = task; // значення зі storage
 
+    const spanEdit = document.createElement("span");
+    spanEdit.className = "edit-item";
+    spanEdit.innerHTML = '<i class="fa fa-edit"></i>';
+    li.append(spanEdit);
+
     const span = document.createElement("span");
     span.className = "delete-item";
     span.innerHTML = '<i class="fa fa-remove"></i>';
@@ -138,6 +173,8 @@ getTasks();
 form.addEventListener("submit", addTask);
 
 button.addEventListener("click", clearTasks);
+
+taskList.addEventListener("click", editTask);
 
 taskList.addEventListener("click", removeTask);
 
