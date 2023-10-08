@@ -34,7 +34,7 @@ const editTaskInLocalStorage = (textEditedTask, indexEditedTask) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 };
 
-const removeTaskFromLocalStorage = (indexDeletedTask) => {
+const removeTaskFromLocalStorage = (index) => {
   const tasks = getTasksFromStorage();
 
   // Видалення елементу з масиву
@@ -93,24 +93,23 @@ const editTask = (event) => {
     const isEditIcon = event.target.classList.contains("fa-edit");
     const liElements = document.querySelectorAll('li');
     const liArr = [...liElements];
+    const editedLi = event.target.closest("li");
 
     if (isEditIcon) {
-        const editText = prompt('Відредагуйте текст');
+        const editedText = prompt('Відредагуйте текст', editedLi.firstChild.nodeValue);
 
-        if (editText) {
-            const editedLi = event.target.closest("li");
+        if (editedText) {
             const indexEditedLi = liArr.indexOf(editedLi);
-            editedLi.firstChild.nodeValue = editText;
+            editedLi.firstChild.nodeValue = editedText;
 
-            editTaskInLocalStorage(editText, indexEditedLi);
+            editTaskInLocalStorage(editedText, indexEditedLi);
         }
     }
 };
 
 const removeTask = (event) => {
   const isDeleteIcon = event.target.classList.contains("fa-remove");
-  const liElements = document.querySelectorAll('li');
-  const liArr = [...liElements];
+  const liArr = [...document.querySelectorAll('li')];
 
   if (isDeleteIcon) {
     const isApproved = confirm("Ви впевнені?");
